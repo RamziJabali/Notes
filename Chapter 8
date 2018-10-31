@@ -1,0 +1,25 @@
+Intro to memory management
+
+An ArrayList stores a list of items in contiguous memory locations, which enables immediate access to any element at index i of ArrayList v by using the get() and set() methods — the program just adds i to the starting address of the first element in v to arrive at the element. The methods add(objRef) and add(i, objRef) append and insert items into an ArrayList, respectively. Now recall that inserting an item at locations other than the end of the ArrayList requires making room by shifting higher-indexed items. Similarly, removing (via the  remove(i) method) an item requires shifting higher-indexed items to fill the gap. 
+Each shift of an item from one element to another element requires a few processor instructions. 
+This issue exposes the ArrayList add/remove performance problem.
+The shifting of elements done by add() and remove() requires several processor instructions per element. Doing many insertions/removes on large ArrayLists can take a significantly long time.
+he appends are fast because they do not involve any shifting of elements, whereas each insert requires 500,000 elements to be shifted — one at a time. 7,500 inserts thus requires 3,750,000,000 (over 3 billion) shifts.
+One way to make inserts or removes faster is to use a different approach for storing a list of items. The approach does not use contiguous memory locations. Instead, each item contains a "pointer" to the next item's location in memory, as well as, the data being stored. Thus, inserting a new item B between existing items A and C just requires changing A to refer to B's memory location, and B to refer to C's location,
+A linked list is a list wherein each item contains not just data but also a reference — a link — to the next item in the list. Comparing ArrayLists and linked lists:
+
+ArrayList: Stores items in contiguous memory locations. Supports quick access to i'th element via the set() and get() methods, but may be slow for inserts or removes on large ArrayLists due to necessary shifting of elements.
+Linked list: Stores each item anywhere in memory, with each item referring to the next item in the list. Supports fast inserts or removes, but access to i'th element may be slow as the list must be traversed from the first item to the i'th item. Also uses more memory due to storing a link for each item.
+
+A First Linked List '
+
+A class is defined to represent each list item, known as a list node. A node is comprised of the data to be stored in each list item, in this case just one int, and a reference to the next node in the list. A special node named head is created to represent the front of the list, after which regular items can be inserted.
+
+Code — The region where the program instructions are stored.
+Static memory — The region where static fields are allocated. The name "static" comes from these variables not changing (static means not changing); they are allocated once and last for the duration of a program's execution, their addresses staying the same.
+The stack — The region where a method's local variables are allocated during a method call. A method call adds local variables to the stack, and a return removes them, like adding and removing dishes from a pile; hence the term "stack." Because this memory is automatically allocated and deallocated, it is also called automatic memory.
+The heap — The region where the "new" operator allocates memory for objects. The region is also called free store.
+
+Because the amount of memory available to a program is finite, objects allocated to the heap must eventually be deallocated when no longer needed by the program. The Java programming language uses a mechanism called garbage collection wherein a program's executable includes automatic behavior that at various intervals finds all unreachable — i.e., unused — allocated memory locations, and automatically frees such memory locations in order to enable memory reuse. Garbage collection can present the programmer with the illusion of a nearly unlimited memory supply at the expense of runtime overhead.
+
+In order to determine which allocated objects the program is currently using at runtime, the Java virtual machine keeps a count, known as a reference count, of all reference variables that are currently referring to an object. If the reference count is zero, then the object is considered an unreachable object and is eligible for garbage collection, as no variables in the program refer to the object. The Java virtual machine marks unreachable objects, and deallocation occurs the next time the Java virtual machine invokes the garbage collector. The following animation illustrates.
