@@ -5,9 +5,8 @@ Branch - A varient of the redo.
 Fetch - download most recent version of the branch.
 Merge - taker Changes from branch and apply it to another branch.
 
-`
-git config
-`
+`git config`
+
 Utility : To set your user name and email in the main configuration file.
 How to : To check your name and email type in git configâ€Š --â€Šglobal user.name 
 and git config â€Š--â€Šglobal user.email. And to set your new email or name git configâ€Š 
